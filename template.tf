@@ -47,38 +47,17 @@ resource "aws_instance" "slave-instance" {
   }
 }
 
-resource "aws_security_group" "allow_http" {
-  name        = "allow_http"
-  description = "Allow HTTP traffic"
+module "mighty_trousers" {
+  source = "./modules/application"
 
-  vpc_id = "${aws_vpc.my_vpc.id}"
-
-  tags {
-    Topic = "Tarraform Training"
-  }
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  vpc_id    = "${aws_vpc.my_vpc.id}"
+  subnet_id = "${aws_subnet.public.id}"
+  name      = "MightyTrousers"
 }
 
-resource "aws_instance" "mighty-trousers" {
-  ami                    = "ami-2cf54551"
-  instance_type          = "t2.micro"
-  subnet_id              = "${aws_subnet.public.id}"
-  vpc_security_group_ids = ["${aws_security_group.allow_http.id}"]
-
-  tags {
-    Topic = "Tarraform Training"
-  }
+module "crazy_foods" {
+  source    = "./modules/application"
+  vpc_id    = "${aws_vpc.my_vpc.id}"
+  subnet_id = "${aws_subnet.public.id}"
+  name      = "CrazyFoods"
 }
