@@ -59,5 +59,5 @@ module "crazy_foods" {
   source    = "./modules/application"
   vpc_id    = "${aws_vpc.my_vpc.id}"
   subnet_id = "${aws_subnet.public.id}"
-  name      = "CrazyFoods"
+  name      = "CrazyFoods ${module.mighty_trousers.hostname}"
 }

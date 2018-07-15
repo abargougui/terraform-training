@@ -28,3 +28,7 @@ resource "aws_instance" "mighty-trousers" {
   subnet_id              = "${var.subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.allow_http.id}"]
 }
+
+output "hostname" {
+  value = "${aws_instance.mighty-trousers.private_dns}"
+}
