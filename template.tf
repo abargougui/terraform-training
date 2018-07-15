@@ -1,6 +1,6 @@
 # Provider configuration 
 provider "aws" {
-  region = "eu-west-3"
+  region = "${var.region}"
 }
 
 # Resource configuration 
@@ -48,11 +48,11 @@ resource "aws_instance" "slave-instance" {
 }
 
 module "mighty_trousers" {
-  source = "./modules/application"
-
-  vpc_id    = "${aws_vpc.my_vpc.id}"
-  subnet_id = "${aws_subnet.public.id}"
-  name      = "MightyTrousers"
+  source      = "./modules/application"
+  vpc_id      = "${aws_vpc.my_vpc.id}"
+  subnet_id   = "${aws_subnet.public.id}"
+  name        = "MightyTrousers"
+  environment = "${var.environment}"
 }
 
 module "crazy_foods" {
